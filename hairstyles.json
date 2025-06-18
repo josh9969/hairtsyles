@@ -1,17 +1,14 @@
 {
-  "oval": [
-    "Layered bob",
-    "Side-swept bangs",
-    "Loose waves"
-  ],
-  "round": [
-    "Long layers",
-    "High top fade",
-    "Side part"
-  ],
-  "square": [
-    "Curtain bangs",
-    "Textured crop",
-    "Pompadour"
-  ]
+  "oval": {
+    "male": ["Short quiff", "Crew cut", "Side swept"],
+    "female": ["Layered bob", "Side-swept bangs", "Loose waves"]
+  },
+  "round": {
+    "male": ["High top fade", "Pompadour", "Spiky hair"],
+    "female": ["Long layers", "Voluminous waves", "Pixie cut"]
+  },
+  "square": {
+    "male": ["Textured crop", "Buzz cut", "Side part"],
+    "female": ["Curtain bangs", "Straight lob", "Soft curls"]
+  }
 }
