@@ -1,14 +1,16 @@
 {
-  "oval": {
-    "male": ["Short quiff", "Crew cut", "Side swept"],
-    "female": ["Layered bob", "Side-swept bangs", "Loose waves"]
+  "male": {
+    "oval": ["Short Quiff", "Pompadour", "Buzz Cut"],
+    "round": ["Flat Top", "Faux Hawk", "High Volume Undercut"],
+    "square": ["Crew Cut", "Side Part", "Spiky Hair"],
+    "heart": ["Textured Fringe", "Side Swept", "Layered Crop"],
+    "oblong": ["Side Part", "Comb Over", "Classic Taper"]
   },
-  "round": {
-    "male": ["High top fade", "Pompadour", "Spiky hair"],
-    "female": ["Long layers", "Voluminous waves", "Pixie cut"]
-  },
-  "square": {
-    "male": ["Textured crop", "Buzz cut", "Side part"],
-    "female": ["Curtain bangs", "Straight lob", "Soft curls"]
+  "female": {
+    "oval": ["Long Waves", "Bob Cut", "Layered Lob"],
+    "round": ["Layered Shag", "Side Bangs", "Asymmetrical Bob"],
+    "square": ["Soft Curls", "Feathered Cut", "Side Layers"],
+    "heart": ["Pixie Cut", "Curtain Bangs", "Side Part Bob"],
+    "oblong": ["Voluminous Curls", "Chin-Length Bob", "Fringe"]
   }
 }
