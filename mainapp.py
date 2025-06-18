@@ -9,13 +9,12 @@ from PIL import Image
 with open("hairstyles.json") as f:
     hairstyle_data = json.load(f)
 
-# Face mesh
+# Initialize face mesh
 mp_face_mesh = mp.solutions.face_mesh
 
 def detect_face_shape(landmarks):
     face_width = landmarks[234][0] - landmarks[454][0]
     forehead_to_chin = landmarks[10][1] - landmarks[152][1]
-
     ratio = abs(face_width / forehead_to_chin)
 
     if ratio > 1.4:
@@ -41,23 +40,39 @@ def get_landmarks(image):
 
 # Streamlit UI
 st.set_page_config(page_title="Hairstyle Recommender")
-st.title("📷 Hairstyle Recommender Based on Your Face Shape")
+st.title("📷 Hairstyle Recommender")
 
-uploaded = st.file_uploader("Upload a photo of your face", type=["jpg", "jpeg", "png"])
+gender = st.radio("Select your gender:", ["Male", "Female"], horizontal=True)
 
-if uploaded:
-    file_bytes = np.asarray(bytearray(uploaded.read()), dtype=np.uint8)
-    img = cv2.imdecode(file_bytes, 1)
+option = st.radio("Choose input method:", ["Upload a photo", "Use webcam"], horizontal=True)
 
-    landmarks = get_landmarks(img)
+image = None
+
+if option == "Upload a photo":
+    uploaded = st.file_uploader("Upload your face image", type=["jpg", "jpeg", "png"])
+    if uploaded:
+        file_bytes = np.asarray(bytearray(uploaded.read()), dtype=np.uint8)
+        image = cv2.imdecode(file_bytes, 1)
+
+elif option == "Use webcam":
+    picture = st.camera_input("Take a photo")
+    if picture:
+        image = cv2.imdecode(np.frombuffer(picture.read(), np.uint8), cv2.IMREAD_COLOR)
+
+if image is not None:
+    landmarks = get_landmarks(image)
     if landmarks:
         face_shape = detect_face_shape(landmarks)
         st.success(f"Detected face shape: **{face_shape.capitalize()}**")
 
-        st.markdown("### Recommended Hairstyles:")
-        styles = hairstyle_data.get(face_shape, [])
-        for style in styles:
-            st.write(f"• {style}")
+        st.markdown("### 💇 Recommended Hairstyles:")
+        styles = hairstyle_data.get(face_shape, {}).get(gender.lower(), [])
+        if styles:
+            for style in styles:
+                st.write(f"• {style}")
+        else:
+            st.warning("No styles found for your face shape and gender.")
     else:
-        st.error("Could not detect a face. Try another photo with a clearer view of your face.")
+        st.error("Face not detected. Please upload a clear photo.")
+
 
