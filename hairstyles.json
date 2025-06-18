@@ -1,8 +1,5 @@
 {
-  "oval": ["Crew Cut", "Pompadour", "Buzz Cut"],
-  "round": ["Quiff", "Undercut", "Textured Crop"],
-  "square": ["Side Part", "Comb Over", "Fade"],
-  "heart": ["Fringe", "Shag", "Side Swept Bangs"],
-  "diamond": ["Layered Cut", "Faux Hawk", "Taper Fade"],
-  "oblong": ["Long Layers", "Wavy Shag", "Man Bun"]
+  "round": ["Short textured crop", "Undercut", "Side part fade"],
+  "oval": ["Pompadour", "Buzz cut", "Quiff"],
+  "square": ["Crew cut", "Fade with hard part", "Textured side sweep"]
 }
