@@ -1,45 +1,26 @@
-import cv2
-import mediapipe as mp
+import face_recognition
 import numpy as np
-from PIL import Image
 
-mp_face_mesh = mp.solutions.face_mesh
+def detect_face_shape(image_path):
+    image = face_recognition.load_image_file(image_path)
+    landmarks = face_recognition.face_landmarks(image)
 
-# Key landmark indices
-JAW_LEFT = 234
-JAW_RIGHT = 454
-FOREHEAD = 10
-CHIN = 152
+    if not landmarks:
+        return "Unknown"
 
-def detect_face_shape(image: Image.Image) -> str:
-    img = np.array(image)
-    img_rgb = cv2.cvtColor(img, cv2.COLOR_RGB2BGR)
+    points = landmarks[0]['chin']
+    jaw_width = np.linalg.norm(np.array(points[0]) - np.array(points[-1]))
+    chin_point = points[len(points)//2]
+    jaw_height = np.linalg.norm(np.array(points[0]) - np.array(chin_point))
 
-    with mp_face_mesh.FaceMesh(static_image_mode=True) as face_mesh:
-        results = face_mesh.process(img_rgb)
-        if not results.multi_face_landmarks:
-            return "unknown"
+    ratio = jaw_width / jaw_height
 
-        face_landmarks = results.multi_face_landmarks[0]
+    if ratio > 2.0:
+        return "round"
+    elif 1.6 < ratio <= 2.0:
+        return "oval"
+    elif ratio <= 1.6:
+        return "square"
+    else:
+        return "unknown"
 
-        def get_point(index):
-            h, w, _ = img.shape
-            pt = face_landmarks.landmark[index]
-            return np.array([int(pt.x * w), int(pt.y * h)])
-
-        jaw_left = get_point(JAW_LEFT)
-        jaw_right = get_point(JAW_RIGHT)
-        forehead = get_point(FOREHEAD)
-        chin = get_point(CHIN)
-
-        jaw_width = np.linalg.norm(jaw_left - jaw_right)
-        face_height = np.linalg.norm(forehead - chin)
-        ratio = jaw_width / face_height
-
-        # Basic shape rules
-        if ratio > 0.9:
-            return "round"
-        elif 0.75 < ratio <= 0.9:
-            return "square"
-        else:
-            return "oval"
