@@ -1,5 +1,17 @@
 {
-  "round": ["Short textured crop", "Undercut", "Side part fade"],
-  "oval": ["Pompadour", "Buzz cut", "Quiff"],
-  "square": ["Crew cut", "Fade with hard part", "Textured side sweep"]
+  "oval": [
+    "Layered bob",
+    "Side-swept bangs",
+    "Loose waves"
+  ],
+  "round": [
+    "Long layers",
+    "High top fade",
+    "Side part"
+  ],
+  "square": [
+    "Curtain bangs",
+    "Textured crop",
+    "Pompadour"
+  ]
 }
